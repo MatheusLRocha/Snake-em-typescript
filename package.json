@@ -1,0 +1,27 @@
+{
+  "name": "snake-em-typescript",
+  "version": "1.0.0",
+  "description": "Projeto do jogo da cobra para aprendizado",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatheusLRocha/Snake-em-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/MatheusLRocha/Snake-em-typescript/issues"
+  },
+  "homepage": "https://github.com/MatheusLRocha/Snake-em-typescript#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "eslint": "^9.39.5"
+  }
+}
