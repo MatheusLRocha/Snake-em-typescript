@@ -52,4 +52,12 @@ setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
 generateFood();
 paint();
+document.addEventListener("keydown", (e) => {
+    if (e.key === "d") {
+        snakeCoordinates.forEach((coord) => {
+            coord.x += 1;
+            paint();
+        });
+    }
+});
 //# sourceMappingURL=index.js.map
