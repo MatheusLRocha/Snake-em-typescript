@@ -1,8 +1,13 @@
-import { BOARD_COLUMNS, BOARD_ROWS, INITIAL_SNAKE_SIZE } from "./constants.js";
+import {
+  BOARD_COLUMNS,
+  BOARD_ROWS,
+  GAME_SPEED,
+  INITIAL_SNAKE_SIZE,
+} from "./constants.js";
 import { isCoordinateEqualToLinear, randomCoordinate } from "./helpers.js";
 import type { Coordinate } from "./types.js";
 
-let snakeCoordinates: Coordinate[];
+let snakeCoordinates: [Coordinate, ...Coordinate[]];
 let foodCoordinate: Coordinate;
 
 const pixels: HTMLDivElement[] = [];
@@ -28,13 +33,16 @@ const setupBoard = (columns: number, rows: number) => {
   }
 };
 
-const initializeSnake = (columns: number, rows: number): Coordinate[] => {
+const initializeSnake = (
+  columns: number,
+  rows: number,
+): [Coordinate, ...Coordinate[]] => {
   const head: Coordinate = {
     x: Math.floor(columns / 2),
     y: Math.floor(rows / 2),
   };
 
-  const snake = [head];
+  const snake: [Coordinate, ...Coordinate[]] = [head];
   for (let i = 1; i < INITIAL_SNAKE_SIZE; i++) {
     const bodyCoordinate: Coordinate = { x: head.x - i, y: head.y };
     snake.push(bodyCoordinate);
@@ -75,11 +83,20 @@ generateFood();
 paint();
 
 document.addEventListener("keydown", (e: KeyboardEvent) => {
-  if (e.key === "d") {
-    snakeCoordinates.forEach((coord) => {
-      coord.x += 1;
+  if (e.key === "Enter") {
+    const gameInterval = setInterval(() => {
+      for (const coord of snakeCoordinates) {
+        if (coord.x === BOARD_COLUMNS - 1) {
+          console.log("Game Over!");
+          clearInterval(gameInterval);
+          return;
+        }
 
-      paint();
-    });
+        coord.x += 1;
+        console.log(coord.x);
+
+        paint();
+      }
+    }, GAME_SPEED);
   }
 });

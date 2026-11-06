@@ -1,4 +1,4 @@
-import { BOARD_COLUMNS, BOARD_ROWS, INITIAL_SNAKE_SIZE } from "./constants.js";
+import { BOARD_COLUMNS, BOARD_ROWS, GAME_SPEED, INITIAL_SNAKE_SIZE, } from "./constants.js";
 import { isCoordinateEqualToLinear, randomCoordinate } from "./helpers.js";
 let snakeCoordinates;
 let foodCoordinate;
@@ -53,11 +53,19 @@ snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
 generateFood();
 paint();
 document.addEventListener("keydown", (e) => {
-    if (e.key === "d") {
-        snakeCoordinates.forEach((coord) => {
-            coord.x += 1;
-            paint();
-        });
+    if (e.key === "Enter") {
+        const gameInterval = setInterval(() => {
+            for (const coord of snakeCoordinates) {
+                if (coord.x === BOARD_COLUMNS - 1) {
+                    console.log("Game Over!");
+                    clearInterval(gameInterval);
+                    return;
+                }
+                coord.x += 1;
+                console.log(coord.x);
+                paint();
+            }
+        }, GAME_SPEED);
     }
 });
 //# sourceMappingURL=index.js.map
