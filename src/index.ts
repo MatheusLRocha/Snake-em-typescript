@@ -155,25 +155,27 @@ const moveDown = () => {
 };
 
 const moveTestUp = () => {
-  for (let i = 0; i < snakeCoordinates.length; i++) {
+  for (let i = snakeCoordinates.length - 1; i > 0; i--) {
     if (snakeCoordinates[i]!.y === 0) {
       endGame();
       break;
     }
 
-    let oldCoord: Coordinate = { ...snakeCoordinates[i]! };
+    let oldCoord: Coordinate = { ...snakeCoordinates[i - 1]! };
 
-    snakeCoordinates[i]!.y -= 1;
+    snakeCoordinates[i] = oldCoord;
 
     console.log(oldCoord);
     console.log(snakeCoordinates[i]);
+    console.log(snakeCoordinates[i + 1]);
 
-    console.log(
-      snakeCoordinates[i]!.x + " - " + snakeCoordinates[i]!.y + " [" + i + "] ",
-    );
-
-    paint();
+    console.log(`${snakeCoordinates[i]!.x} - ${snakeCoordinates[i]!.y}[${i}]`);
+    console.log(`${i - 1}`);
   }
+
+  snakeCoordinates[0].y -= 1;
+
+  paint();
 };
 
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
