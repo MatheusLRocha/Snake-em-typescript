@@ -53,7 +53,7 @@ const endGame = () => {
     window.location.reload();
 };
 let gameInterval;
-const moveFoward = () => {
+const moveRight = () => {
     clearInterval(gameInterval);
     gameInterval = setInterval(() => {
         for (const coord of snakeCoordinates) {
@@ -63,12 +63,25 @@ const moveFoward = () => {
                 return;
             }
             coord.x += 1;
-            console.log(coord.x);
             paint();
         }
     }, GAME_SPEED);
 };
-const moveUpward = () => {
+const moveLeft = () => {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        for (const coord of snakeCoordinates) {
+            if (coord.x === 0) {
+                endGame();
+                clearInterval(gameInterval);
+                return;
+            }
+            coord.x -= 1;
+            paint();
+        }
+    }, GAME_SPEED);
+};
+const moveUp = () => {
     clearInterval(gameInterval);
     gameInterval = setInterval(() => {
         for (const coord of snakeCoordinates) {
@@ -78,7 +91,20 @@ const moveUpward = () => {
                 return;
             }
             coord.y -= 1;
-            console.log(coord.y);
+            paint();
+        }
+    }, GAME_SPEED);
+};
+const moveDown = () => {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        for (const coord of snakeCoordinates) {
+            if (coord.y === BOARD_ROWS - 1) {
+                endGame();
+                clearInterval(gameInterval);
+                return;
+            }
+            coord.y += 1;
             paint();
         }
     }, GAME_SPEED);
@@ -88,11 +114,17 @@ snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
 generateFood();
 paint();
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        moveFoward();
+    if (e.key === "Enter" || e.key === "d") {
+        moveRight();
     }
     if (e.key === "w") {
-        moveUpward();
+        moveUp();
+    }
+    if (e.key === "s") {
+        moveDown();
+    }
+    if (e.key === "a") {
+        moveLeft();
     }
 });
 //# sourceMappingURL=index.js.map

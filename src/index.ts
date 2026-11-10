@@ -81,7 +81,7 @@ const endGame = () => {
 
 let gameInterval: number;
 
-const moveFoward = () => {
+const moveRight = () => {
   clearInterval(gameInterval);
 
   gameInterval = setInterval(() => {
@@ -93,14 +93,31 @@ const moveFoward = () => {
       }
 
       coord.x += 1;
-      console.log(coord.x);
 
       paint();
     }
   }, GAME_SPEED);
 };
 
-const moveUpward = () => {
+const moveLeft = () => {
+  clearInterval(gameInterval);
+
+  gameInterval = setInterval(() => {
+    for (const coord of snakeCoordinates) {
+      if (coord.x === 0) {
+        endGame();
+        clearInterval(gameInterval);
+        return;
+      }
+
+      coord.x -= 1;
+
+      paint();
+    }
+  }, GAME_SPEED);
+};
+
+const moveUp = () => {
   clearInterval(gameInterval);
 
   gameInterval = setInterval(() => {
@@ -112,12 +129,30 @@ const moveUpward = () => {
       }
 
       coord.y -= 1;
-      console.log(coord.y);
 
       paint();
     }
   }, GAME_SPEED);
 };
+
+const moveDown = () => {
+  clearInterval(gameInterval);
+
+  gameInterval = setInterval(() => {
+    for (const coord of snakeCoordinates) {
+      if (coord.y === BOARD_ROWS - 1) {
+        endGame();
+        clearInterval(gameInterval);
+        return;
+      }
+
+      coord.y += 1;
+
+      paint();
+    }
+  }, GAME_SPEED);
+};
+
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 
 snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
@@ -127,11 +162,19 @@ generateFood();
 paint();
 
 document.addEventListener("keydown", (e: KeyboardEvent) => {
-  if (e.key === "Enter") {
-    moveFoward();
+  if (e.key === "Enter" || e.key === "d") {
+    moveRight();
   }
 
   if (e.key === "w") {
-    moveUpward();
+    moveUp();
+  }
+
+  if (e.key === "s") {
+    moveDown();
+  }
+
+  if (e.key === "a") {
+    moveLeft();
   }
 });
