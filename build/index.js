@@ -84,16 +84,16 @@ const moveLeft = () => {
 const moveUp = () => {
     clearInterval(gameInterval);
     gameInterval = setInterval(() => {
-        for (const coord of snakeCoordinates) {
-            if (coord.y === 0) {
+        for (let i = snakeCoordinates.length - 1; i > 0; i--) {
+            if (snakeCoordinates[i].y === 0) {
                 endGame();
-                clearInterval(gameInterval);
-                return;
+                break;
             }
-            coord.y -= 1;
-            console.log(coord.x + " - " + coord.y);
-            paint();
+            let nextCoord = { ...snakeCoordinates[i - 1] };
+            snakeCoordinates[i] = nextCoord;
         }
+        snakeCoordinates[0].y -= 1;
+        paint();
     }, GAME_SPEED);
 };
 const moveDown = () => {
@@ -109,23 +109,6 @@ const moveDown = () => {
             paint();
         }
     }, GAME_SPEED);
-};
-const moveTestUp = () => {
-    for (let i = snakeCoordinates.length - 1; i > 0; i--) {
-        if (snakeCoordinates[i].y === 0) {
-            endGame();
-            break;
-        }
-        let oldCoord = { ...snakeCoordinates[i - 1] };
-        snakeCoordinates[i] = oldCoord;
-        console.log(oldCoord);
-        console.log(snakeCoordinates[i]);
-        console.log(snakeCoordinates[i + 1]);
-        console.log(`${snakeCoordinates[i].x} - ${snakeCoordinates[i].y}[${i}]`);
-        console.log(`${i - 1}`);
-    }
-    snakeCoordinates[0].y -= 1;
-    paint();
 };
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
@@ -143,9 +126,6 @@ document.addEventListener("keydown", (e) => {
     }
     if (e.key === "a") {
         moveLeft();
-    }
-    if (e.key === "g") {
-        moveTestUp();
     }
 });
 //# sourceMappingURL=index.js.map
