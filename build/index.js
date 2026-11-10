@@ -48,24 +48,51 @@ const paint = () => {
         }
     });
 };
+const endGame = () => {
+    alert("Game Over!");
+    window.location.reload();
+};
+let gameInterval;
+const moveFoward = () => {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        for (const coord of snakeCoordinates) {
+            if (coord.x === BOARD_COLUMNS - 1) {
+                endGame();
+                clearInterval(gameInterval);
+                return;
+            }
+            coord.x += 1;
+            console.log(coord.x);
+            paint();
+        }
+    }, GAME_SPEED);
+};
+const moveUpward = () => {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        for (const coord of snakeCoordinates) {
+            if (coord.y === 0) {
+                endGame();
+                clearInterval(gameInterval);
+                return;
+            }
+            coord.y -= 1;
+            console.log(coord.y);
+            paint();
+        }
+    }, GAME_SPEED);
+};
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
 generateFood();
 paint();
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        const gameInterval = setInterval(() => {
-            for (const coord of snakeCoordinates) {
-                if (coord.x === BOARD_COLUMNS - 1) {
-                    console.log("Game Over!");
-                    clearInterval(gameInterval);
-                    return;
-                }
-                coord.x += 1;
-                console.log(coord.x);
-                paint();
-            }
-        }, GAME_SPEED);
+        moveFoward();
+    }
+    if (e.key === "w") {
+        moveUpward();
     }
 });
 //# sourceMappingURL=index.js.map
