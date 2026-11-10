@@ -129,6 +129,7 @@ const moveUp = () => {
       }
 
       coord.y -= 1;
+      console.log(coord.x + " - " + coord.y);
 
       paint();
     }
@@ -151,6 +152,28 @@ const moveDown = () => {
       paint();
     }
   }, GAME_SPEED);
+};
+
+const moveTestUp = () => {
+  for (let i = 0; i < snakeCoordinates.length; i++) {
+    if (snakeCoordinates[i]!.y === 0) {
+      endGame();
+      break;
+    }
+
+    let oldCoord: Coordinate = { ...snakeCoordinates[i]! };
+
+    snakeCoordinates[i]!.y -= 1;
+
+    console.log(oldCoord);
+    console.log(snakeCoordinates[i]);
+
+    console.log(
+      snakeCoordinates[i]!.x + " - " + snakeCoordinates[i]!.y + " [" + i + "] ",
+    );
+
+    paint();
+  }
 };
 
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
@@ -176,5 +199,9 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
 
   if (e.key === "a") {
     moveLeft();
+  }
+
+  if (e.key === "g") {
+    moveTestUp();
   }
 });

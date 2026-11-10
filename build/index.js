@@ -91,6 +91,7 @@ const moveUp = () => {
                 return;
             }
             coord.y -= 1;
+            console.log(coord.x + " - " + coord.y);
             paint();
         }
     }, GAME_SPEED);
@@ -109,6 +110,20 @@ const moveDown = () => {
         }
     }, GAME_SPEED);
 };
+const moveTestUp = () => {
+    for (let i = 0; i < snakeCoordinates.length; i++) {
+        if (snakeCoordinates[i].y === 0) {
+            endGame();
+            break;
+        }
+        let oldCoord = { ...snakeCoordinates[i] };
+        snakeCoordinates[i].y -= 1;
+        console.log(oldCoord);
+        console.log(snakeCoordinates[i]);
+        console.log(snakeCoordinates[i].x + " - " + snakeCoordinates[i].y + " [" + i + "] ");
+        paint();
+    }
+};
 setupBoard(BOARD_COLUMNS, BOARD_ROWS);
 snakeCoordinates = initializeSnake(BOARD_COLUMNS, BOARD_ROWS);
 generateFood();
@@ -125,6 +140,9 @@ document.addEventListener("keydown", (e) => {
     }
     if (e.key === "a") {
         moveLeft();
+    }
+    if (e.key === "g") {
+        moveTestUp();
     }
 });
 //# sourceMappingURL=index.js.map
