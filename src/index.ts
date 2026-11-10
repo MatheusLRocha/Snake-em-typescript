@@ -85,17 +85,20 @@ const moveRight = () => {
   clearInterval(gameInterval);
 
   gameInterval = setInterval(() => {
-    for (const coord of snakeCoordinates) {
-      if (coord.x === BOARD_COLUMNS - 1) {
+    for (let i = snakeCoordinates.length - 1; i > 0; i--) {
+      if (snakeCoordinates[i]!.x === BOARD_COLUMNS - 1) {
         endGame();
-        clearInterval(gameInterval);
-        return;
+        break;
       }
 
-      coord.x += 1;
+      let nextCoord: Coordinate = { ...snakeCoordinates[i - 1]! };
 
-      paint();
+      snakeCoordinates[i] = nextCoord;
     }
+
+    snakeCoordinates[0].x += 1;
+
+    paint();
   }, GAME_SPEED);
 };
 
@@ -103,17 +106,20 @@ const moveLeft = () => {
   clearInterval(gameInterval);
 
   gameInterval = setInterval(() => {
-    for (const coord of snakeCoordinates) {
-      if (coord.x === 0) {
+    for (let i = snakeCoordinates.length - 1; i > 0; i--) {
+      if (snakeCoordinates[i]!.x === 0) {
         endGame();
-        clearInterval(gameInterval);
-        return;
+        break;
       }
 
-      coord.x -= 1;
+      let nextCoord: Coordinate = { ...snakeCoordinates[i - 1]! };
 
-      paint();
+      snakeCoordinates[i] = nextCoord;
     }
+
+    snakeCoordinates[0].x -= 1;
+
+    paint();
   }, GAME_SPEED);
 };
 
@@ -142,17 +148,20 @@ const moveDown = () => {
   clearInterval(gameInterval);
 
   gameInterval = setInterval(() => {
-    for (const coord of snakeCoordinates) {
-      if (coord.y === BOARD_ROWS - 1) {
+    for (let i = snakeCoordinates.length - 1; i > 0; i--) {
+      if (snakeCoordinates[i]!.y === BOARD_ROWS - 1) {
         endGame();
-        clearInterval(gameInterval);
-        return;
+        break;
       }
 
-      coord.y += 1;
+      let nextCoord: Coordinate = { ...snakeCoordinates[i - 1]! };
 
-      paint();
+      snakeCoordinates[i] = nextCoord;
     }
+
+    snakeCoordinates[0].y += 1;
+
+    paint();
   }, GAME_SPEED);
 };
 
