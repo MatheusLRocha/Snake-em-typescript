@@ -12,6 +12,9 @@ let foodCoordinate: Coordinate;
 
 const pixels: HTMLDivElement[] = [];
 
+let scoreDiv: HTMLDivElement = document.getElementById("hud") as HTMLDivElement;
+let scorePoints: number = 0;
+
 const setupBoard = (columns: number, rows: number) => {
   const board: HTMLDivElement = document.getElementById(
     "board",
@@ -51,8 +54,23 @@ const initializeSnake = (
   return snake;
 };
 
+let foodInterval: number;
 const generateFood = () => {
   foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
+
+  foodInterval = setInterval(() => {
+    if (
+      snakeCoordinates[0].x === foodCoordinate.x &&
+      snakeCoordinates[0].y === foodCoordinate.y
+    ) {
+      scorePoints++;
+      scoreDiv.textContent = `Score: ${scorePoints}`;
+
+      foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
+
+      paint();
+    }
+  }, GAME_SPEED);
 };
 
 const paint = () => {

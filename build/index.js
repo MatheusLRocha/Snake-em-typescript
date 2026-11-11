@@ -3,6 +3,8 @@ import { isCoordinateEqualToLinear, randomCoordinate } from "./helpers.js";
 let snakeCoordinates;
 let foodCoordinate;
 const pixels = [];
+let scoreDiv = document.getElementById("hud");
+let scorePoints = 0;
 const setupBoard = (columns, rows) => {
     const board = document.getElementById("board");
     board.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
@@ -29,8 +31,18 @@ const initializeSnake = (columns, rows) => {
     }
     return snake;
 };
+let foodInterval;
 const generateFood = () => {
     foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
+    foodInterval = setInterval(() => {
+        if (snakeCoordinates[0].x === foodCoordinate.x &&
+            snakeCoordinates[0].y === foodCoordinate.y) {
+            scorePoints++;
+            scoreDiv.textContent = `Score: ${scorePoints}`;
+            foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
+            paint();
+        }
+    }, GAME_SPEED);
 };
 const paint = () => {
     pixels.forEach((pixel, linear) => {
