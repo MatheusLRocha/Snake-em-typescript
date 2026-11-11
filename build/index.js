@@ -53,8 +53,16 @@ const endGame = () => {
     window.location.reload();
 };
 let gameInterval;
+let left = false;
+let right = false;
+let up = false;
+let down = false;
 const moveRight = () => {
     clearInterval(gameInterval);
+    right = true;
+    left = false;
+    up = false;
+    down = false;
     gameInterval = setInterval(() => {
         for (let i = snakeCoordinates.length - 1; i > 0; i--) {
             if (snakeCoordinates[i].x === BOARD_COLUMNS - 1) {
@@ -70,6 +78,10 @@ const moveRight = () => {
 };
 const moveLeft = () => {
     clearInterval(gameInterval);
+    left = true;
+    right = false;
+    up = false;
+    down = false;
     gameInterval = setInterval(() => {
         for (let i = snakeCoordinates.length - 1; i > 0; i--) {
             if (snakeCoordinates[i].x === 0) {
@@ -85,6 +97,10 @@ const moveLeft = () => {
 };
 const moveUp = () => {
     clearInterval(gameInterval);
+    up = true;
+    down = false;
+    right = false;
+    left = false;
     gameInterval = setInterval(() => {
         for (let i = snakeCoordinates.length - 1; i > 0; i--) {
             if (snakeCoordinates[i].y === 0) {
@@ -100,6 +116,10 @@ const moveUp = () => {
 };
 const moveDown = () => {
     clearInterval(gameInterval);
+    down = true;
+    up = false;
+    right = false;
+    left = false;
     gameInterval = setInterval(() => {
         for (let i = snakeCoordinates.length - 1; i > 0; i--) {
             if (snakeCoordinates[i].y === BOARD_ROWS - 1) {
@@ -119,16 +139,20 @@ generateFood();
 paint();
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === "d") {
-        moveRight();
+        if (!left)
+            moveRight();
     }
     if (e.key === "w") {
-        moveUp();
+        if (!down)
+            moveUp();
     }
     if (e.key === "s") {
-        moveDown();
+        if (!up)
+            moveDown();
     }
     if (e.key === "a") {
-        moveLeft();
+        if (!right)
+            moveLeft();
     }
 });
 //# sourceMappingURL=index.js.map
