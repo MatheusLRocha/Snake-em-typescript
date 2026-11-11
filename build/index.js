@@ -39,6 +39,12 @@ const generateFood = () => {
             snakeCoordinates[0].y === foodCoordinate.y) {
             scorePoints++;
             scoreDiv.textContent = `Score: ${scorePoints}`;
+            let lastIndex = snakeCoordinates.length - 1;
+            const bodyCoordinate = {
+                x: snakeCoordinates[lastIndex].x - 1,
+                y: snakeCoordinates[lastIndex].y,
+            };
+            snakeCoordinates.push(bodyCoordinate);
             foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
             paint();
         }

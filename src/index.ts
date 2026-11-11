@@ -66,6 +66,15 @@ const generateFood = () => {
       scorePoints++;
       scoreDiv.textContent = `Score: ${scorePoints}`;
 
+      let lastIndex: number = snakeCoordinates.length - 1;
+
+      const bodyCoordinate: Coordinate = {
+        x: snakeCoordinates[lastIndex]!.x - 1,
+        y: snakeCoordinates[lastIndex]!.y,
+      };
+
+      snakeCoordinates.push(bodyCoordinate);
+
       foodCoordinate = randomCoordinate(BOARD_COLUMNS, BOARD_ROWS);
 
       paint();
